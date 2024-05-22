@@ -1,7 +1,4 @@
 import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchContactsThunk } from "./redux/contacts/operations";
 import { Route, Routes } from "react-router";
 import Layout from "./components/nestedComponents/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
@@ -10,12 +7,6 @@ import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import ContactsPage from "./pages/ContactsPage/ContactsPage";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // dispatch(fetchContactsThunk());
-  }, [dispatch]);
-
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
