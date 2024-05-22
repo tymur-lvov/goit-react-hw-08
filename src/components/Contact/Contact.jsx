@@ -1,14 +1,14 @@
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { IoPerson } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsOps";
+import { deleteContactThunk } from "../../redux/contactsOps";
 import s from "./Contact.module.css";
 
 function Contact({ contact: { name, number, id } }) {
   const dispatch = useDispatch();
 
   const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactThunk(id));
   };
 
   return (

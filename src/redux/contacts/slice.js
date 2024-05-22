@@ -1,6 +1,10 @@
 import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./contactsOps";
-import { selectNameFilter } from "./filtersSlice";
+import {
+  fetchContactsThunk,
+  addContactThunk,
+  deleteContactThunk,
+} from "./operations";
+import { selectNameFilter } from "../filters/slice";
 import toast from "react-hot-toast";
 
 const initialState = {
@@ -21,22 +25,22 @@ export const contactsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+      .addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
         state.contacts.items = payload;
       })
-      .addCase(addContact.fulfilled, (state, { payload }) => {
+      .addCase(addContactThunk.fulfilled, (state, { payload }) => {
         state.contacts.items.push(payload);
       })
-      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+      .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
         state.contacts.items = state.contacts.items.filter(
           (item) => item.id !== payload.id
         );
       })
       .addMatcher(
         isAnyOf(
-          fetchContacts.pending,
-          addContact.pending,
-          deleteContact.pending
+          fetchContactsThunk.pending,
+          addContactThunk.pending,
+          deleteContactThunk.pending
         ),
         (state) => {
           state.contacts.isLoading = true;
@@ -45,9 +49,9 @@ export const contactsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          fetchContacts.fulfilled,
-          addContact.fulfilled,
-          deleteContact.fulfilled
+          fetchContactsThunk.fulfilled,
+          addContactThunk.fulfilled,
+          deleteContactThunk.fulfilled
         ),
         (state) => {
           state.contacts.isLoading = false;
@@ -55,9 +59,9 @@ export const contactsSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          fetchContacts.rejected,
-          addContact.rejected,
-          deleteContact.rejected
+          fetchContactsThunk.rejected,
+          addContactThunk.rejected,
+          deleteContactThunk.rejected
         ),
         (state) => {
           state.contacts.isLoading = false;
