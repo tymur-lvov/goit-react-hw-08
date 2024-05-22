@@ -6,6 +6,7 @@ import {
 } from "./operations";
 import { selectNameFilter } from "../filters/slice";
 import toast from "react-hot-toast";
+import { userLogoutThunk } from "../auth/operations";
 
 const initialState = {
   contacts: {
@@ -35,6 +36,9 @@ export const contactsSlice = createSlice({
         state.contacts.items = state.contacts.items.filter(
           (item) => item.id !== payload.id
         );
+      })
+      .addCase(userLogoutThunk.fulfilled, () => {
+        return initialState;
       })
       .addMatcher(
         isAnyOf(

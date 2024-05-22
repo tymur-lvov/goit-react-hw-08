@@ -1,5 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { userLoginThunk, userRegisterThunk } from "./operations";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  userLoginThunk,
+  userLogoutThunk,
+  userRefreshThunk,
+  userRegisterThunk,
+} from "./operations";
 
 const initialState = {
   user: {
@@ -17,6 +22,7 @@ const authSlice = createSlice({
   selectors: {
     selectUserName: (state) => state.user.name,
     selectUserEmail: (state) => state.user.email,
+    selectAuthToken: (state) => state.token,
     selectIsLoggedIn: (state) => state.isLoggedIn,
     selectIsRefreshing: (state) => state.isRefreshing,
   },
@@ -31,13 +37,34 @@ const authSlice = createSlice({
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
+      })
+      .addCase(userLogoutThunk.fulfilled, () => {
+        return initialState;
+      })
+      .addCase(userRefreshThunk.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(userRefreshThunk.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(userRefreshThunk.rejected, (state) => {
+        state.isRefreshing = false;
       });
+    // .addMatcher(({ type }) => {
+    //   type.endsWith("pending"),
+    //     (state) => {
+    //       state.isRefreshing = true;
+    //     };
+    // })
   },
 });
 
 export const {
   selectUserName,
   selectUserEmail,
+  selectAuthToken,
   selectIsLoggedIn,
   selectIsRefreshing,
 } = authSlice.selectors;

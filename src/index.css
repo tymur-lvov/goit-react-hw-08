@@ -114,7 +114,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -131,6 +131,7 @@ img {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 ol,
