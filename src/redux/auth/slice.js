@@ -17,8 +17,8 @@ const authSlice = createSlice({
   selectors: {
     selectUserName: (state) => state.user.name,
     selectUserEmail: (state) => state.user.email,
-    selectUserIsLoggedIn: (state) => state.isLoggedIn,
-    selectUserIsRefreshing: (state) => state.isRefreshing,
+    selectIsLoggedIn: (state) => state.isLoggedIn,
+    selectIsRefreshing: (state) => state.isRefreshing,
   },
   extraReducers: (builder) => {
     builder
@@ -38,8 +38,8 @@ const authSlice = createSlice({
 export const {
   selectUserName,
   selectUserEmail,
-  selectUserIsLoggedIn,
-  selectUserIsRefreshing,
+  selectIsLoggedIn,
+  selectIsRefreshing,
 } = authSlice.selectors;
 
 export const authReducer = authSlice.reducer;

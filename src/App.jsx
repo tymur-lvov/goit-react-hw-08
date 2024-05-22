@@ -5,6 +5,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import RestrictedRoute from "./routes/RestrictedRoute/RestrictedRoute";
+import PrivateRoute from "./routes/PrivateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -13,9 +15,30 @@ function App() {
       <Layout>
         <Routes>
           <Route index element={<HomePage />} />
-          <Route path="/register" element={<RegistrationPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirect="/contacts"
+                componenet={<RegistrationPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirect="/contacts"
+                componenet={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirect="/login" componenet={<ContactsPage />} />
+            }
+          />
         </Routes>
       </Layout>
     </>
