@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useId } from "react";
 import { useDispatch } from "react-redux";
-import { addContactThunk } from "../../redux/contactsOps";
+import { addContactThunk } from "../../redux/contacts/operations";
 import s from "./ContactForm.module.css";
 
 const validationSchema = Yup.object().shape({

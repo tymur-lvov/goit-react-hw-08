@@ -5,8 +5,8 @@ const Loader = () => {
     <div
       style={{
         position: "fixed",
-        top: 12,
-        right: 12,
+        top: 20,
+        left: "48%",
       }}
     >
       <RotatingLines

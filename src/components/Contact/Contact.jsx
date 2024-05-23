@@ -1,7 +1,7 @@
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { IoPerson } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { deleteContactThunk } from "../../redux/contactsOps";
+import { deleteContactThunk } from "../../redux/contacts/operations";
 import s from "./Contact.module.css";
 
 function Contact({ contact: { name, number, id } }) {

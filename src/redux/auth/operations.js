@@ -6,6 +6,7 @@ export const userRegisterThunk = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await goitApi.post("users/signup", credentials);
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -18,6 +19,7 @@ export const userLoginThunk = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const { data } = await goitApi.post("users/login", credentials);
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -34,6 +36,7 @@ export const userLogoutThunk = createAsyncThunk(
       updateAuthHeader(auth.token);
 
       const { data } = await goitApi.post("users/logout");
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -54,6 +57,7 @@ export const userRefreshThunk = createAsyncThunk(
       updateAuthHeader(auth.token);
 
       const { data } = await goitApi.get("users/current");
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
