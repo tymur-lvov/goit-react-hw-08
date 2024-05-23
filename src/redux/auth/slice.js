@@ -1,10 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   userLoginThunk,
   userLogoutThunk,
   userRefreshThunk,
   userRegisterThunk,
 } from "./operations";
+import toast from "react-hot-toast";
 
 const initialState = {
   user: {
@@ -14,6 +15,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  isError: false,
 };
 
 const authSlice = createSlice({
@@ -41,23 +43,49 @@ const authSlice = createSlice({
       .addCase(userLogoutThunk.fulfilled, () => {
         return initialState;
       })
-      .addCase(userRefreshThunk.pending, (state) => {
-        state.isRefreshing = true;
-      })
       .addCase(userRefreshThunk.fulfilled, (state, { payload }) => {
         state.user = payload;
         state.isLoggedIn = true;
-        state.isRefreshing = false;
       })
       .addCase(userRefreshThunk.rejected, (state) => {
         state.isRefreshing = false;
-      });
-    // .addMatcher(({ type }) => {
-    //   type.endsWith("pending"),
-    //     (state) => {
-    //       state.isRefreshing = true;
-    //     };
-    // })
+        state.isError = true;
+      })
+      .addMatcher(
+        isAnyOf(
+          userRegisterThunk.pending,
+          userLoginThunk.pending,
+          userLogoutThunk.pending,
+          userRefreshThunk.pending
+        ),
+        (state) => {
+          state.isRefreshing = true;
+          state.isError = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          userRegisterThunk.fulfilled,
+          userLoginThunk.fulfilled,
+          userLogoutThunk.fulfilled,
+          userRefreshThunk.fulfilled
+        ),
+        (state) => {
+          state.isRefreshing = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          userRegisterThunk.rejected,
+          userLoginThunk.rejected,
+          userLogoutThunk.rejected
+        ),
+        (state) => {
+          state.isRefreshing = false;
+          state.isError = true;
+          toast.error("This didn't work.");
+        }
+      );
   },
 });
 

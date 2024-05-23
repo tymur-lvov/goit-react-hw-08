@@ -54,13 +54,13 @@ export const deleteContactThunk = createAsyncThunk(
 
 export const updateContactThunk = createAsyncThunk(
   "contacts/updateContact",
-  async (id, body, thunkAPI) => {
+  async ({ contactIdRef, body }, thunkAPI) => {
     try {
       const { auth } = thunkAPI.getState();
 
       updateAuthHeader(auth.token);
 
-      const { data } = await goitApi.patch(`contacts/${id}`, body);
+      const { data } = await goitApi.patch(`contacts/${contactIdRef}`, body);
 
       return data;
     } catch (error) {

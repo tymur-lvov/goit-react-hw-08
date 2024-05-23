@@ -3,6 +3,7 @@ import {
   fetchContactsThunk,
   addContactThunk,
   deleteContactThunk,
+  updateContactThunk,
 } from "./operations";
 import { selectNameFilter } from "../filters/slice";
 import toast from "react-hot-toast";
@@ -37,6 +38,14 @@ export const contactsSlice = createSlice({
           (item) => item.id !== payload.id
         );
       })
+      .addCase(updateContactThunk.fulfilled, (state, { payload }) => {
+        const index = state.contacts.items.findIndex((item) => {
+          return item.id === payload.id;
+        });
+
+        state.contacts.items[index] = payload;
+      })
+
       .addCase(userLogoutThunk.fulfilled, () => {
         return initialState;
       })
@@ -44,7 +53,9 @@ export const contactsSlice = createSlice({
         isAnyOf(
           fetchContactsThunk.pending,
           addContactThunk.pending,
-          deleteContactThunk.pending
+          deleteContactThunk.pending,
+          updateContactThunk.pending,
+          userLogoutThunk.pending
         ),
         (state) => {
           state.contacts.isLoading = true;
@@ -55,7 +66,9 @@ export const contactsSlice = createSlice({
         isAnyOf(
           fetchContactsThunk.fulfilled,
           addContactThunk.fulfilled,
-          deleteContactThunk.fulfilled
+          deleteContactThunk.fulfilled,
+          updateContactThunk.fulfilled,
+          userLogoutThunk.fulfilled
         ),
         (state) => {
           state.contacts.isLoading = false;
@@ -65,7 +78,9 @@ export const contactsSlice = createSlice({
         isAnyOf(
           fetchContactsThunk.rejected,
           addContactThunk.rejected,
-          deleteContactThunk.rejected
+          deleteContactThunk.rejected,
+          updateContactThunk.rejected,
+          userLogoutThunk.rejected
         ),
         (state) => {
           state.contacts.isLoading = false;

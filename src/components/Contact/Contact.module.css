@@ -1,20 +1,27 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .field {
-    display: flex;
-    align-items: center;
-    gap: 4px
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.delete_button {
-    font-size: inherit;
-    border: inherit;
-    border-radius: 5px;
-    height: 50px;
-    width: 100px;
-    align-self: center;
+.button {
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 30px;
+  width: 100px;
+  align-self: center;
+}
+
+.button_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

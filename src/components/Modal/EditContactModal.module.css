@@ -35,10 +35,15 @@
 }
 
 .button {
-  font-size: 18px;
+  font-size: inherit;
   border: 1px solid black;
   border-radius: 5px;
-  height: 30px;
-  width: 150px;
-  align-self: center;
+  height: 50px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.button_wrapper {
+  display: flex;
+  gap: 4px;
 }
