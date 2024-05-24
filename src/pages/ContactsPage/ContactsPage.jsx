@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { fetchContactsThunk } from "../../redux/contacts/operations";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
+import SearchBox from "../../components/SearchBox/SearchBox";
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const ContactsPage = () => {
   return (
     <>
       <ContactForm />
+      <SearchBox />
       <ContactList />
     </>
   );
